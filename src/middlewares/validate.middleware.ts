@@ -9,7 +9,6 @@ export interface ValidationSchemas {
   query?: ZodSchema;
 }
 
-
 export const validate = (schemas: ValidationSchemas) => {
   return (req: Request, _res: Response, next: NextFunction): void => {
     const errors: Record<string, string[]> = {};
