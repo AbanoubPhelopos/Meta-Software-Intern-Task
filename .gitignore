@@ -60,7 +60,6 @@ Thumbs.db
 # Prisma local artifacts
 prisma/*.db
 prisma/*.db-journal
-prisma/migrations/migration_lock.toml
 
 # Vercel
 .vercel
