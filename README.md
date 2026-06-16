@@ -1,18 +1,23 @@
 # Personal Blogging Platform API
 
-> A production-grade RESTful API for a personal blogging platform — secure, documented, tested, and ready to deploy to Vercel.
+> A production-grade RESTful API for a personal blogging platform — secure, documented, tested, and deployed to Vercel.
+
+**🚀 [Live demo on Vercel →](https://meta-software-intern-task.vercel.app)**
+**📚 [Interactive Swagger UI →](https://meta-software-intern-task.vercel.app/api/docs)**
 
 [![Node](https://img.shields.io/badge/Node-%E2%89%A520-339933?logo=node.js&logoColor=white)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Express](https://img.shields.io/badge/Express-4.21-000000?logo=express&logoColor=white)](https://expressjs.com)
 [![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?logo=prisma&logoColor=white)](https://www.prisma.io)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?logo=vercel&logoColor=white)](https://vercel.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
 ## Table of contents
 
+- [Live demo](#live-demo)
 - [Overview](#overview)
 - [Features](#features)
 - [Architecture](#architecture)
@@ -32,6 +37,19 @@
 - [License](#license)
 
 ---
+
+## Live demo
+
+The API is deployed on Vercel with a Neon-hosted Postgres:
+
+| URL | What it serves |
+|---|---|
+| <https://meta-software-intern-task.vercel.app/api/v1/health> | Liveness probe |
+| <https://meta-software-intern-task.vercel.app/api/v1/posts> | Public list of posts |
+| <https://meta-software-intern-task.vercel.app/api/docs> | **Interactive Swagger UI** — click "Try it out" to hit the live API |
+| <https://meta-software-intern-task.vercel.app/api/docs.json> | Raw OpenAPI 3.0.3 spec |
+
+The OpenAPI spec is configured with a **relative server URL** (`/api/v1`), so the Swagger UI's "Try it out" button always targets the origin you're loading it from — no hardcoded production URL, no CORS surprises.
 
 ## Overview
 

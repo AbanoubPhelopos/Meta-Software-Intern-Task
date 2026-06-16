@@ -24,18 +24,6 @@ const parseCorsOrigins = (raw: string): CorsOptions['origin'] => {
   return origins;
 };
 
-// Self-contained Swagger UI HTML that loads everything from the
-// jsDelivr CDN. The previous implementation used swagger-ui-express
-// with `customJs` / `customCssUrl` pointing at the CDN, but the
-// library's HTML template always emits BOTH the local and the CDN
-// references; on Vercel, the local script tags 404 because the
-// bundler doesn't ship every static file in the deployment package,
-// and the page never initializes the UI.
-//
-// Rendering our own HTML drops swagger-ui-express's involvement
-// entirely. The 30 lines below are the entire interactive docs
-// surface. The bundle is pinned to the swagger-ui-dist@5 major
-// version that swagger-ui-express declares as its peer.
 const SWAGGER_UI_HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -118,7 +106,6 @@ export const buildApp = (): Express => {
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.send(SWAGGER_UI_HTML);
   });
-
 
   app.get('/api/docs.json', (_req: Request, res: Response) => {
     res.status(200).json(swaggerSpec);

@@ -1,5 +1,4 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-import { env } from './env';
 
 const options: swaggerJsdoc.Options = {
   definition: {
@@ -11,10 +10,8 @@ const options: swaggerJsdoc.Options = {
       contact: { name: 'Abanoub Phelopos', email: 'abanoubphelopos12@gmail.com' },
       license: { name: 'MIT' },
     },
-    servers: [
-      { url: `http://localhost:${env.PORT}`, description: 'Local development' },
-      { url: 'https://<your-deployment>.vercel.app', description: 'Production' },
-    ],
+
+    servers: [{ url: '/api/v1', description: 'Current host' }],
     tags: [
       { name: 'Auth', description: 'User registration and login' },
       { name: 'Posts', description: 'Public and authenticated post operations' },
