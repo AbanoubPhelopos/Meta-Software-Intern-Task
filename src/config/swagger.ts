@@ -11,7 +11,7 @@ const options: swaggerJsdoc.Options = {
       license: { name: 'MIT' },
     },
 
-    servers: [{ url: '/api/v1', description: 'Current host' }],
+    servers: [{ url: '/', description: 'Current host' }],
     tags: [
       { name: 'Auth', description: 'User registration and login' },
       { name: 'Posts', description: 'Public and authenticated post operations' },
