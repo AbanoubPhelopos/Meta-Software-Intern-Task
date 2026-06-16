@@ -1,0 +1,24 @@
+// Stable error codes sent to clients. Codes are part of the API contract —
+// do not rename without a deprecation cycle.
+
+export const ErrorCodes = {
+  BAD_REQUEST: 'BAD_REQUEST',
+  VALIDATION_ERROR: 'VALIDATION_ERROR',
+  UNAUTHORIZED: 'UNAUTHORIZED',
+  FORBIDDEN: 'FORBIDDEN',
+  NOT_FOUND: 'NOT_FOUND',
+  CONFLICT: 'CONFLICT',
+  RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED',
+  ROUTE_NOT_FOUND: 'ROUTE_NOT_FOUND',
+  INTERNAL_ERROR: 'INTERNAL_ERROR',
+
+  INVALID_CREDENTIALS: 'INVALID_CREDENTIALS',
+  EMAIL_ALREADY_EXISTS: 'EMAIL_ALREADY_EXISTS',
+  INVALID_TOKEN: 'INVALID_TOKEN',
+  TOKEN_EXPIRED: 'TOKEN_EXPIRED',
+
+  POST_NOT_FOUND: 'POST_NOT_FOUND',
+  NOT_POST_OWNER: 'NOT_POST_OWNER',
+} as const;
+
+export type ErrorCode = (typeof ErrorCodes)[keyof typeof ErrorCodes];
