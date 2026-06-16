@@ -5,8 +5,8 @@
     "lib": ["ES2022"],
     "moduleResolution": "node",
     "outDir": "./dist",
-    "rootDir": "./src",
     "baseUrl": "./",
+    "rootDir": "./",
     "paths": {
       "@/*": ["src/*"],
       "@config/*": ["src/config/*"],
@@ -43,6 +43,6 @@
 
     "types": ["node", "jest"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "coverage", "tests", "api"]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "jest.config.js"],
+  "exclude": ["node_modules", "dist", "coverage", "api"]
 }

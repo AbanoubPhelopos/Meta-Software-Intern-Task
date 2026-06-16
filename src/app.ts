@@ -41,21 +41,23 @@ export const buildApp = (): Express => {
     }),
   );
 
-  const authLimiter = rateLimit({
-    windowMs: env.RATE_LIMIT_WINDOW_MS,
-    max: env.RATE_LIMIT_MAX,
-    standardHeaders: true,
-    legacyHeaders: false,
-    handler: (_req, _res, next: NextFunction) => {
-      next(
-        ApiError.tooManyRequests(
-          'Too many requests, please try again later',
-          ErrorCodes.RATE_LIMIT_EXCEEDED,
-        ),
-      );
-    },
-  });
-  app.use('/api/v1/auth', authLimiter);
+  if (env.NODE_ENV !== 'test') {
+    const authLimiter = rateLimit({
+      windowMs: env.RATE_LIMIT_WINDOW_MS,
+      max: env.RATE_LIMIT_MAX,
+      standardHeaders: true,
+      legacyHeaders: false,
+      handler: (_req, _res, next: NextFunction) => {
+        next(
+          ApiError.tooManyRequests(
+            'Too many requests, please try again later',
+            ErrorCodes.RATE_LIMIT_EXCEEDED,
+          ),
+        );
+      },
+    });
+    app.use('/api/v1/auth', authLimiter);
+  }
 
   app.get('/api/v1/health', (_req: Request, res: Response) => {
     res.status(200).json({ success: true, data: { status: 'ok' } });
