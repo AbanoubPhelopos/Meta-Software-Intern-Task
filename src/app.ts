@@ -4,7 +4,6 @@ import cors, { type CorsOptions } from 'cors';
 import compression from 'compression';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
-import swaggerUi from 'swagger-ui-express';
 
 import { env } from './config/env';
 import { logger } from './shared/utils/logger';
@@ -24,6 +23,43 @@ const parseCorsOrigins = (raw: string): CorsOptions['origin'] => {
   if (origins.length === 1) return origins[0];
   return origins;
 };
+
+// Self-contained Swagger UI HTML that loads everything from the
+// jsDelivr CDN. The previous implementation used swagger-ui-express
+// with `customJs` / `customCssUrl` pointing at the CDN, but the
+// library's HTML template always emits BOTH the local and the CDN
+// references; on Vercel, the local script tags 404 because the
+// bundler doesn't ship every static file in the deployment package,
+// and the page never initializes the UI.
+//
+// Rendering our own HTML drops swagger-ui-express's involvement
+// entirely. The 30 lines below are the entire interactive docs
+// surface. The bundle is pinned to the swagger-ui-dist@5 major
+// version that swagger-ui-express declares as its peer.
+const SWAGGER_UI_HTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Personal Blogging Platform API</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css" />
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script>
+    window.onload = () => {
+      window.ui = SwaggerUIBundle({
+        url: '/api/docs.json',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [SwaggerUIBundle.presets.apis],
+        layout: 'BaseLayout',
+      });
+    };
+  </script>
+</body>
+</html>`;
 
 export const buildApp = (): Express => {
   const app = express();
@@ -63,7 +99,27 @@ export const buildApp = (): Express => {
     res.status(200).json({ success: true, data: { status: 'ok' } });
   });
 
-  app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  app.use('/api/docs', (_req: Request, res: Response, next: NextFunction) => {
+    res.setHeader(
+      'Content-Security-Policy',
+      [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+        "img-src 'self' data: https://cdn.jsdelivr.net",
+        "font-src 'self' https://cdn.jsdelivr.net data:",
+        "connect-src 'self'",
+      ].join('; '),
+    );
+    next();
+  });
+
+  app.get('/api/docs', (_req: Request, res: Response) => {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.send(SWAGGER_UI_HTML);
+  });
+
+
   app.get('/api/docs.json', (_req: Request, res: Response) => {
     res.status(200).json(swaggerSpec);
   });
