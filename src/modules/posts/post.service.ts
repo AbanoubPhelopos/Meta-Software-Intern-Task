@@ -1,7 +1,7 @@
 import { ApiError } from '@shared/errors/ApiError';
 import { ErrorCodes } from '@shared/errors/errorCodes';
 import * as postRepository from '@modules/posts/post.repository';
-import type { ListPostsQuery } from '@modules/posts/post.schema';
+import type { CreatePostInput, ListPostsQuery, UpdatePostInput } from '@modules/posts/post.schema';
 
 export interface PaginatedPosts {
   posts: Awaited<ReturnType<typeof postRepository.findMany>>;
@@ -40,3 +40,36 @@ export const getPost = async (id: number) => {
   }
   return post;
 };
+
+export const createPost = async (authorId: number, input: CreatePostInput) => {
+  return postRepository.create({
+    title: input.title,
+    content: input.content,
+    author: { connect: { id: authorId } },
+  });
+};
+
+export const updatePost = async (id: number, authorId: number, input: UpdatePostInput) => {
+  await assertOwned(id, authorId);
+  return postRepository.update(id, buildPatch(input));
+};
+
+export const deletePost = async (id: number, authorId: number) => {
+  await assertOwned(id, authorId);
+  await postRepository.remove(id);
+};
+
+const assertOwned = async (id: number, authorId: number): Promise<void> => {
+  const existing = await postRepository.findById(id);
+  if (!existing) {
+    throw ApiError.notFound(`Post ${id} not found`, ErrorCodes.POST_NOT_FOUND);
+  }
+  if (existing.authorId !== authorId) {
+    throw ApiError.forbidden('You can only modify your own posts', ErrorCodes.NOT_POST_OWNER);
+  }
+};
+
+const buildPatch = (input: UpdatePostInput) => ({
+  ...(input.title !== undefined && { title: input.title }),
+  ...(input.content !== undefined && { content: input.content }),
+});

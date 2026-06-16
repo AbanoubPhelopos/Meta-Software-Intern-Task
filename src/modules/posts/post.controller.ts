@@ -1,8 +1,14 @@
 import type { Request, Response } from 'express';
 import { asyncHandler } from '@shared/utils/asyncHandler';
+import { requireUser } from '@middlewares/authenticate.middleware';
 import type { PaginatedResponse, SuccessResponse } from '@shared/types/api';
 import * as postService from '@modules/posts/post.service';
-import type { ListPostsQuery } from '@modules/posts/post.schema';
+import type {
+  CreatePostInput,
+  ListPostsQuery,
+  PostIdParam,
+  UpdatePostInput,
+} from '@modules/posts/post.schema';
 
 type PostWithAuthor = Awaited<ReturnType<typeof postService.getPost>>;
 
@@ -17,7 +23,30 @@ export const list = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const getById = asyncHandler(async (req: Request, res: Response) => {
-  const result = await postService.getPost((req.params as unknown as { id: number }).id);
+  const { id } = req.params as unknown as PostIdParam;
+  const result = await postService.getPost(id);
   const body: SuccessResponse<PostWithAuthor> = { success: true, data: result };
   res.status(200).json(body);
+});
+
+export const create = asyncHandler(async (req: Request, res: Response) => {
+  const { id: authorId } = requireUser(req);
+  const result = await postService.createPost(authorId, req.body as CreatePostInput);
+  const body: SuccessResponse<PostWithAuthor> = { success: true, data: result };
+  res.status(201).json(body);
+});
+
+export const update = asyncHandler(async (req: Request, res: Response) => {
+  const { id: authorId } = requireUser(req);
+  const { id } = req.params as unknown as PostIdParam;
+  const result = await postService.updatePost(id, authorId, req.body as UpdatePostInput);
+  const body: SuccessResponse<PostWithAuthor> = { success: true, data: result };
+  res.status(200).json(body);
+});
+
+export const remove = asyncHandler(async (req: Request, res: Response) => {
+  const { id: authorId } = requireUser(req);
+  const { id } = req.params as unknown as PostIdParam;
+  await postService.deletePost(id, authorId);
+  res.status(204).send();
 });

@@ -21,11 +21,15 @@ export const validate = (schemas: ValidationSchemas) => {
       if (result.success) {
         Object.assign(req[source] as object, result.data);
       } else {
-        const fieldErrors = result.error.flatten().fieldErrors;
+        const { fieldErrors, formErrors } = result.error.flatten();
         for (const [field, messages] of Object.entries(fieldErrors)) {
           if (!messages) continue;
           const key = source === 'body' ? field : `${source}.${field}`;
           errors[key] = messages;
+        }
+        if (formErrors.length > 0) {
+          const key = source === 'body' ? '_form' : `${source}._form`;
+          errors[key] = formErrors;
         }
       }
     }

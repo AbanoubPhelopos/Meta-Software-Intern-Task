@@ -26,3 +26,15 @@ export const count = (authorId?: number): Promise<number> => {
     where: authorId !== undefined ? { authorId } : undefined,
   });
 };
+
+export const create = (data: Prisma.PostCreateInput) => {
+  return prisma.post.create({ data, include: postWithAuthor });
+};
+
+export const update = (id: number, data: Prisma.PostUpdateInput) => {
+  return prisma.post.update({ where: { id }, data, include: postWithAuthor });
+};
+
+export const remove = (id: number) => {
+  return prisma.post.delete({ where: { id } });
+};
