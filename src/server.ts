@@ -38,6 +38,6 @@ process.on('unhandledRejection', (reason) => {
 
 process.on('uncaughtException', (err) => {
   logger.error('Uncaught exception', { err });
-  
+
   process.exit(1);
 });
