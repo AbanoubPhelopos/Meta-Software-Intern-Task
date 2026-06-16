@@ -21,7 +21,6 @@ describe('token utilities', () => {
   });
 
   it('rejects a token whose sub is not numeric', () => {
-
     const bad = signToken(
       { sub: 'not-a-number' as unknown as number, email: 'a@b.com' },
       SECRET,

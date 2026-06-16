@@ -92,7 +92,9 @@ describe('POST /api/v1/auth/login', () => {
 
   it('returns 200 with user + token for correct credentials', async () => {
     const credentials = { email: 'login@example.com', password: 'longenough-password' };
-    await request(app).post('/api/v1/auth/register').send({ name: 'Login', ...credentials });
+    await request(app)
+      .post('/api/v1/auth/register')
+      .send({ name: 'Login', ...credentials });
 
     const res = await request(app).post('/api/v1/auth/login').send(credentials);
     expect(res.status).toBe(200);
