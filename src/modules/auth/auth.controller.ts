@@ -1,9 +1,9 @@
 import type { Request, Response } from 'express';
-import { asyncHandler } from '@shared/utils/asyncHandler';
-import type { SuccessResponse } from '@shared/types/api';
-import * as authService from '@modules/auth/auth.service';
-import type { AuthResult } from '@modules/auth/auth.service';
-import type { LoginInput, RegisterInput } from '@modules/auth/auth.schema';
+import { asyncHandler } from '../../shared/utils/asyncHandler';
+import type { SuccessResponse } from '../../shared/types/api';
+import * as authService from './auth.service';
+import type { AuthResult } from './auth.service';
+import type { LoginInput, RegisterInput } from './auth.schema';
 
 export const register = asyncHandler(async (req: Request, res: Response) => {
   const result = await authService.register(req.body as RegisterInput);

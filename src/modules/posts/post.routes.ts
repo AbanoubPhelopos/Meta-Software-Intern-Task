@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import { validate } from '@middlewares/validate.middleware';
-import { authenticate } from '@middlewares/authenticate.middleware';
-import * as postController from '@modules/posts/post.controller';
+import { validate } from '../../middlewares/validate.middleware';
+import { authenticate } from '../../middlewares/authenticate.middleware';
+import * as postController from './post.controller';
 import {
   createPostSchema,
   listPostsQuerySchema,
   postIdParamSchema,
   updatePostSchema,
-} from '@modules/posts/post.schema';
+} from './post.schema';
 
 const router = Router();
 

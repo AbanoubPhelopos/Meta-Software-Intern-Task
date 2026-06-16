@@ -1,11 +1,11 @@
 import type { Request, Response, NextFunction } from 'express';
 import { Prisma } from '@prisma/client';
 import { ZodError } from 'zod';
-import { env } from '@config/env';
-import { ApiError } from '@shared/errors/ApiError';
-import { ErrorCodes, type ErrorCode } from '@shared/errors/errorCodes';
-import { logger } from '@shared/utils/logger';
-import type { ErrorResponse } from '@shared/types/api';
+import { env } from '../config/env';
+import { ApiError } from '../shared/errors/ApiError';
+import { ErrorCodes, type ErrorCode } from '../shared/errors/errorCodes';
+import { logger } from '../shared/utils/logger';
+import type { ErrorResponse } from '../shared/types/api';
 
 type Classified = {
   statusCode: number;

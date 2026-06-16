@@ -1,9 +1,9 @@
 import type { Request, Response, NextFunction } from 'express';
 import jwt, { type JwtPayload } from 'jsonwebtoken';
-import { env } from '@config/env';
-import { ApiError } from '@shared/errors/ApiError';
-import { ErrorCodes } from '@shared/errors/errorCodes';
-import { verifyToken } from '@shared/utils/token';
+import { env } from '../config/env';
+import { ApiError } from '../shared/errors/ApiError';
+import { ErrorCodes } from '../shared/errors/errorCodes';
+import { verifyToken } from '../shared/utils/token';
 
 export const authenticate = (req: Request, _res: Response, next: NextFunction): void => {
   const header = req.headers.authorization;

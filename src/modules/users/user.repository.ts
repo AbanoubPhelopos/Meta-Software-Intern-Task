@@ -1,5 +1,5 @@
 import type { Prisma, User } from '@prisma/client';
-import { prisma } from '@config/database';
+import { prisma } from '../../config/database';
 
 export const findByEmail = (email: string): Promise<User | null> => {
   return prisma.user.findUnique({ where: { email } });

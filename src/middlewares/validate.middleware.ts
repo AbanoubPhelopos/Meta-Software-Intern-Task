@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import type { ZodSchema } from 'zod';
-import { ApiError } from '@shared/errors/ApiError';
-import { ErrorCodes } from '@shared/errors/errorCodes';
+import { ApiError } from '../shared/errors/ApiError';
+import { ErrorCodes } from '../shared/errors/errorCodes';
 
 export interface ValidationSchemas {
   body?: ZodSchema;

@@ -1,4 +1,4 @@
-import type { ErrorCode } from '@shared/errors/errorCodes';
+import type { ErrorCode } from './errorCodes';
 
 // Typed error thrown anywhere in the service / repository layers.
 // The central error middleware (added in a later commit) catches these

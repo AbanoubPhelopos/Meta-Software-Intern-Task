@@ -1,11 +1,11 @@
 import { Prisma } from '@prisma/client';
-import { env } from '@config/env';
-import { ApiError } from '@shared/errors/ApiError';
-import { ErrorCodes } from '@shared/errors/errorCodes';
-import { comparePassword, hashPassword } from '@shared/utils/password';
-import { signToken } from '@shared/utils/token';
-import type { LoginInput, RegisterInput } from '@modules/auth/auth.schema';
-import * as userRepository from '@modules/users/user.repository';
+import { env } from '../../config/env';
+import { ApiError } from '../../shared/errors/ApiError';
+import { ErrorCodes } from '../../shared/errors/errorCodes';
+import { comparePassword, hashPassword } from '../../shared/utils/password';
+import { signToken } from '../../shared/utils/token';
+import type { LoginInput, RegisterInput } from './auth.schema';
+import * as userRepository from '../users/user.repository';
 
 export interface AuthResult {
   user: {

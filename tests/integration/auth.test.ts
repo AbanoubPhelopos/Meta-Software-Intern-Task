@@ -1,6 +1,6 @@
 import request from 'supertest';
 import type { Express } from 'express';
-import { prisma } from '@config/database';
+import { prisma } from '../../src/config/database';
 import { getTestApp } from '../helpers/test-app';
 import { cleanDb } from '../helpers/db';
 

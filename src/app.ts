@@ -6,13 +6,13 @@ import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import swaggerUi from 'swagger-ui-express';
 
-import { env } from '@config/env';
-import { logger } from '@shared/utils/logger';
-import { ApiError } from '@shared/errors/ApiError';
-import { ErrorCodes } from '@shared/errors/errorCodes';
-import { swaggerSpec } from '@config/swagger';
-import { errorHandler } from '@middlewares/error.middleware';
-import { notFoundHandler } from '@middlewares/notFound.middleware';
+import { env } from './config/env';
+import { logger } from './shared/utils/logger';
+import { ApiError } from './shared/errors/ApiError';
+import { ErrorCodes } from './shared/errors/errorCodes';
+import { swaggerSpec } from './config/swagger';
+import { errorHandler } from './middlewares/error.middleware';
+import { notFoundHandler } from './middlewares/notFound.middleware';
 import apiRoutes from './routes';
 
 const parseCorsOrigins = (raw: string): CorsOptions['origin'] => {

@@ -1,4 +1,4 @@
-import { prisma } from '@config/database';
+import { prisma } from '../../src/config/database';
 
 export const cleanDb = async (): Promise<void> => {
   await prisma.post.deleteMany();

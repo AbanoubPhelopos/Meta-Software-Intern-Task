@@ -1,5 +1,5 @@
 import type { Prisma } from '@prisma/client';
-import { prisma } from '@config/database';
+import { prisma } from '../../config/database';
 
 // Author is embedded on every read so the response shape is consistent
 // between the list and the single-post endpoints.

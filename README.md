@@ -436,8 +436,8 @@ Vercel auto-detects the `api/` directory and wraps `api/index.ts` with its `@ver
 
 ### What Vercel does on every push to `main`
 
-1. Runs `npm run vercel-build` → `prisma generate && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json`
-2. Bundles `api/index.ts` with `@vercel/node`
+1. Runs `npm run vercel-build` → `prisma generate && tsc -p tsconfig.build.json`
+2. Auto-detects `api/index.js` and serves it at `/api`
 3. Routes every request (`/(.*)`) to that single function
 4. The function runs the Express app, which connects to your hosted Postgres
 
@@ -468,7 +468,7 @@ Vercel auto-detects the `api/` directory and wraps `api/index.ts` with its `@ver
 | `npm run db:reset` | Drop & re-apply all migrations (destructive) |
 | `npm run db:studio` | Open Prisma Studio in the browser |
 | `npm run db:generate` | Regenerate the Prisma Client (run after `schema.prisma` changes) |
-| `npm run vercel-build` | The build command Vercel runs (`prisma generate && tsc && tsc-alias`) |
+| `npm run vercel-build` | The build command Vercel runs (`prisma generate && tsc`) |
 
 ---
 

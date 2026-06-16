@@ -1,14 +1,9 @@
 import type { Request, Response } from 'express';
-import { asyncHandler } from '@shared/utils/asyncHandler';
-import { requireUser } from '@middlewares/authenticate.middleware';
-import type { PaginatedResponse, SuccessResponse } from '@shared/types/api';
-import * as postService from '@modules/posts/post.service';
-import type {
-  CreatePostInput,
-  ListPostsQuery,
-  PostIdParam,
-  UpdatePostInput,
-} from '@modules/posts/post.schema';
+import { asyncHandler } from '../../shared/utils/asyncHandler';
+import { requireUser } from '../../middlewares/authenticate.middleware';
+import type { PaginatedResponse, SuccessResponse } from '../../shared/types/api';
+import * as postService from './post.service';
+import type { CreatePostInput, ListPostsQuery, PostIdParam, UpdatePostInput } from './post.schema';
 
 type PostWithAuthor = Awaited<ReturnType<typeof postService.getPost>>;
 

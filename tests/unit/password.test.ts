@@ -1,4 +1,4 @@
-import { comparePassword, hashPassword } from '@shared/utils/password';
+import { comparePassword, hashPassword } from '../../src/shared/utils/password';
 
 describe('password utilities', () => {
   const plain = 'correct-horse-battery-staple';

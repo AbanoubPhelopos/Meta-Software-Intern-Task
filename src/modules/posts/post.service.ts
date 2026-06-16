@@ -1,7 +1,7 @@
-import { ApiError } from '@shared/errors/ApiError';
-import { ErrorCodes } from '@shared/errors/errorCodes';
-import * as postRepository from '@modules/posts/post.repository';
-import type { CreatePostInput, ListPostsQuery, UpdatePostInput } from '@modules/posts/post.schema';
+import { ApiError } from '../../shared/errors/ApiError';
+import { ErrorCodes } from '../../shared/errors/errorCodes';
+import * as postRepository from './post.repository';
+import type { CreatePostInput, ListPostsQuery, UpdatePostInput } from './post.schema';
 
 export interface PaginatedPosts {
   posts: Awaited<ReturnType<typeof postRepository.findMany>>;

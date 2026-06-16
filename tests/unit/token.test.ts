@@ -1,4 +1,4 @@
-import { signToken, verifyToken } from '@shared/utils/token';
+import { signToken, verifyToken } from '../../src/shared/utils/token';
 
 const SECRET = 'a-test-secret-that-is-at-least-32-chars-long';
 const OTHER_SECRET = 'a-different-test-secret-of-equal-or-greater-length';
