@@ -42,7 +42,6 @@ export const register = async (input: RegisterInput): Promise<AuthResult> => {
     });
     return { user: toPublic(user), token: issueToken(user) };
   } catch (err) {
-
     if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === 'P2002') {
       throw ApiError.conflict('Email is already registered', ErrorCodes.EMAIL_ALREADY_EXISTS);
     }
@@ -52,8 +51,7 @@ export const register = async (input: RegisterInput): Promise<AuthResult> => {
 
 export const login = async (input: LoginInput): Promise<AuthResult> => {
   const user = await userRepository.findByEmail(input.email);
-  
-  
+
   if (!user) {
     throw ApiError.unauthorized('Invalid email or password', ErrorCodes.INVALID_CREDENTIALS);
   }
