@@ -18,11 +18,10 @@ if (env.NODE_ENV !== 'production') {
   globalForPrisma.prisma = prisma;
 }
 
-const disconnect = async (signal: string) => {
-  logger.info('Shutting down: disconnecting Prisma', { signal });
-  await prisma.$disconnect();
-  process.exit(0);
+export const disconnectPrisma = async (): Promise<void> => {
+  try {
+    await prisma.$disconnect();
+  } catch (err) {
+    logger.error('Error disconnecting Prisma', { err });
+  }
 };
-
-process.on('SIGINT', () => void disconnect('SIGINT'));
-process.on('SIGTERM', () => void disconnect('SIGTERM'));

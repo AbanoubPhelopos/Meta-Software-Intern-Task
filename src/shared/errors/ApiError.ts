@@ -45,6 +45,13 @@ export class ApiError extends Error {
     return new ApiError(409, code, message);
   }
 
+  static tooManyRequests(
+    message = 'Too many requests, please try again later',
+    code: ErrorCode | string = 'RATE_LIMIT_EXCEEDED',
+  ) {
+    return new ApiError(429, code, message);
+  }
+
   static internal(message = 'Internal server error', code: ErrorCode | string = 'INTERNAL_ERROR') {
     return new ApiError(500, code, message);
   }
