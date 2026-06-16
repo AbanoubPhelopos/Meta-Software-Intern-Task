@@ -1,0 +1,12 @@
+node_modules/
+dist/
+build/
+out/
+coverage/
+package-lock.json
+prisma/migrations/
+.vercel/
+.vscode/
+.idea/
+*.log
+*.md
